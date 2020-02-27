@@ -13,6 +13,9 @@ const Header = () => {
       <NavLink className="nav-link" to={"/Register"}>
         Register
       </NavLink>
+      <NavLink className="nav-link" to={"/Catalog"}>
+        Catalog
+      </NavLink>
     </div>
   );
 };

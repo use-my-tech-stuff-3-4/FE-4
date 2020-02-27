@@ -13,6 +13,7 @@ const Register = ({ touched, errors, values, status }) => {
 console.log(onSubmit)
   return (
     <Form className="form">
+      <h2>REGISTER</h2>
       <label>
         <Field
           className="field"
