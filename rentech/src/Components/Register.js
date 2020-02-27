@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
 import * as yup from "yup"; // for everything
 
 const Register = ({ touched, errors, values, status }) => {
   
-  
-  console.log(status); //DATA FROM FORM, A USESTATE SHOULD BE CREATED TO SET FORM VALUES
+  const [onSubmit, setOnSubmit] = useState([])
 
+  useEffect(() => {
+    status && setOnSubmit(status);   //DATA FROM FORM
+  }, [status]);
+  
+console.log(onSubmit)
   return (
     <Form className="form">
       <label>
