@@ -9,10 +9,10 @@ handleQuery(values)
 
 
   return (
-    <section>
+    <section >
      <Form>
        <label>
-         <Field name='query' type='text' placeholder='search' />
+         <Field name='search' type='text' placeholder='search' />
        </label>
      </Form>
     
@@ -23,7 +23,7 @@ handleQuery(values)
 
 export default withFormik({
   mapPropsToValues: props => ({
-    query: "",
+    search: "",
    })
  
 })(SearchBar);
