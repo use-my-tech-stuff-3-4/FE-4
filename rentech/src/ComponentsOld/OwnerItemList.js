@@ -1,6 +1,4 @@
 import React from 'react';
-/* import moment from 'moment';
-import Loader from 'react-loader-spinner'; */
 import { axiosWithAuth } from '../utilities/axiosWithAuth';
 
 class OwnerItemList extends React.Component {
