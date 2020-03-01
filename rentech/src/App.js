@@ -1,19 +1,47 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import "./App.css";
-import Login from "./Components/Login";
-import Header from "./Components/Header";
-import Home from "./Components/Home";
-import { Route } from "react-router-dom";
-import Register from "./Components/Register";
+import Login from "./components/Login";
+import Header from "./components/Header";
+import Home from "./components/Home";
+import Register from "./components/Register";
+import OwnerProfile from './components/OwnerProfile';
+import AddItemForRent from './components/AddItemForRent';
+import ProtectedRoute from './components/ProtectedRoute';
 
-export default function App() {
+function App() {
   return (
-    <div className="App">
-      <h1>Forms</h1>
-      <Header />
-      <Route exact path="/" component={Home} />
-      <Route exact path="/Login" component={Login} />
-      <Route exact path="/Register" component={Register} />
+    <div>
+
+      <Router>
+        <Header />
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/login">Login / Logout</Link>
+          </li>
+          <li>
+            <Link to="/register">Register</Link>
+          </li>
+          <li>
+            <Link to="/profile">Your Profile</Link>
+          </li>
+          <li>
+            <Link to="/add-item">Add Item For Rent</Link>
+          </li>
+        </ul>
+        <Switch>
+          <ProtectedRoute exact path="/profile" component={OwnerProfile} />
+          <ProtectedRoute exact path="/add-item" component={AddItemForRent} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route component={Home} />
+        </Switch>
+      </Router>
     </div>
   );
 }
+
+export default App;
