@@ -1,4 +1,4 @@
-import { FETCH_DATA, UPDATE_OWNER_ITEMS, SET_ERROR } from '../actions';
+import { FETCH_DATA } from '../actions';
 
 const initialState = {
     username: "",
@@ -8,10 +8,7 @@ const initialState = {
     items: [],
     isFetchingData: false,
     error: "",
-    credentials: {
-        username: username,
-        password: password
-    }
+
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -21,18 +18,6 @@ export const userReducer = (state = initialState, action) => {
                 ...state,
                 isFetchingData: true
             };
-        case UPDATE_OWNER_ITEMS:
-            return {
-                ...state,
-                items: action.payload,
-                isFetchingData: false
-            };
-        case SET_ERROR:
-            return {
-                ...state,
-                error: action.payload,
-                isFetchingData: false
-            }
         default:
             return state;
     }

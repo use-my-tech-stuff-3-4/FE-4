@@ -1,6 +1,6 @@
 import React from "react";
-import { useFormik, withFormik, Form, Field } from "formik";
-import * as yup from "yup";
+/* import { useFormik, withFormik, Form, Field } from "formik";
+import * as yup from "yup"; */
 import { axiosWithAuth } from '../utilities/axiosWithAuth';
 
 /* Commented this out because I am still figuring out how to incorporate it into the
@@ -77,7 +77,6 @@ class Login extends React.Component {
     }
   };
 
-
   handleChange = e => {
     this.setState({
       credentials: {
@@ -85,8 +84,8 @@ class Login extends React.Component {
         [e.target.name]: e.target.value
       }
     });
-
   }
+
   login = e => {
     e.preventDefault();
     //console.log('credentials', this.state.credentials);
@@ -94,6 +93,7 @@ class Login extends React.Component {
     axiosWithAuth()
       .post("/users/login", this.state.credentials, config)
       .then(res => {
+        console.log('in the post request')
         localStorage.setItem("token", res.data.payload);
         this.props.history.push("/");
       })
@@ -121,7 +121,7 @@ class Login extends React.Component {
           />
           <button>Log In</button>
         </form>
-        <button onClick={localStorage.clear}>Log Out</button>
+        <button onClick={localStorage.clear()}>Log Out</button>
       </div>
     )
   }

@@ -1,11 +1,86 @@
 import React from "react";
-import { withFormik, Form, Field } from "formik";
-import * as yup from "yup"; // for everything
+import axios from 'axios';
 
-const Register = ({ touched, errors, values, status }) => {
+const config = {
+  headers: {
+    'Content-Type': 'application/json'
+  }
+}
+
+class Register extends React.Component {
+  state = {
+    userInfo: {
+      username: "",
+      password: "",
+      type: ""
+    }
+  };
+
+  handleChange = e => {
+    this.setState({
+      userInfo: {
+        ...this.state.userInfo,
+        [e.target.name]: e.target.value
+      }
+    });
+  }
+
+  registerUser = e => {
+    e.preventDefault();
+    axios
+      .post("https://use-my-tech-stuff-4.herokuapp.com/api/users/register", this.state.userInfo, config)
+      .then(res => {
+        console.log('in the registration form post request')
+        this.props.history.push("/login");
+      })
+      .catch(err => {
+        console.log("unable to register user due to error:", err);
+      });
+  };
+
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.registerUser}>
+          <input
+            type="text"
+            name="username"
+            placeholder="username"
+            value={this.state.userInfo.username}
+            onChange={this.handleChange}
+          />
+          <input
+            type="text"
+            name="password"
+            placeholder="password"
+            value={this.state.userInfo.password}
+            onChange={this.handleChange}
+          />
+          <input
+            type="text"
+            name="type"
+            placeholder="'owner' or 'renter'?"
+            value={this.state.userInfo.type}
+            onChange={this.handleChange}
+          />
+          <button>Register</button>
+        </form>
+      </div>
+    )
+  }
+}
+export default Register;
 
 
-  console.log(status); //DATA FROM FORM, A USESTATE SHOULD BE CREATED TO SET FORM VALUES
+// OLD CODE 
+
+//import { withFormik, Form, Field } from "formik";
+//import * as yup from "yup"; // for everything
+
+/* const Register = ({ touched, errors, values, status }) => {
+
+  //console.log(status);
+  //DATA FROM FORM, A USESTATE SHOULD BE CREATED TO SET FORM VALUES
 
   return (
     <Form className="form">
@@ -15,6 +90,8 @@ const Register = ({ touched, errors, values, status }) => {
           name="username"
           type="text"
           placeholder="username"
+          onChange={handleChange}
+          value={credentials.username}
         />
         {touched.username && errors.username && (
           <div className="error">{errors.username}</div>
@@ -24,8 +101,10 @@ const Register = ({ touched, errors, values, status }) => {
         <Field
           className="field"
           name="password"
-          type="password"
+          type="current-password"
           placeholder="password"
+          onChange={handleChange}
+          value={credentials.password}
         />
         {touched.password && errors.password && (
           <div className="error">{errors.password}</div>
@@ -46,9 +125,9 @@ const Register = ({ touched, errors, values, status }) => {
       </label>
     </Form>
   );
-};
+}; */
 
-export default withFormik({
+/* export default withFormik({
   mapPropsToValues: props => ({
 
     username: "",
@@ -56,6 +135,7 @@ export default withFormik({
     type: ""
 
   }),
+
   validationSchema: yup.object().shape({
     username: yup
       .string()
@@ -65,10 +145,19 @@ export default withFormik({
       .string()
       .required('select an option')
   }),
+
   handleSubmit: (values, { resetForm, setStatus }) => {
-    // console.log("Submitting!", formikBag)
-    // POST body === {}
+    axios
+      .post("/users/register", credentials, config)
+      .then(res => {
+        console.log('in the registration form post request')
+        // props.history.push("/login");
+      })
+      .catch(err => {
+        console.log("could not register user due to error: ", err);
+      });
+
     setStatus(values);
     resetForm();
   }
-})(Register);
+})(Register); */
