@@ -1,11 +1,117 @@
 import React from "react";
+import { axiosWithAuth } from '../utilities/axiosWithAuth';
+import { connect } from 'react-redux';
+import { loginUser, getAllUsers, setCurrentUser } from '../actions';
+
+const config = {
+  headers: {
+    'Content-Type': 'application/json'
+  }
+}
+
+class Login extends React.Component {
+  state = {
+    credentials: {
+      id: 0,
+      username: "",
+      password: "",
+      items: []
+    }
+  };
+
+  componentDidMount() {
+    this.props.getAllUsers();
+  }
+
+  handleChange = e => {
+    this.setState({
+      credentials: {
+        ...this.state.credentials,
+        [e.target.name]: e.target.value
+      }
+    });
+  }
+
+  findCurrentUser = (username) => {
+    for (let i = 0; i < this.props.allUsers.length; i++) {
+      if (username === this.props.allUsers[i].username) {
+        this.setState({
+          credentials: {
+            ...this.state.credentials,
+            id: this.props.allUsers[i].id,
+            items: this.props.allUsers[i].items
+          }
+        })
+        //console.log('updated current user upon login, should have id now', this.state.credentials)
+      }
+    }
+  }
+
+
+  login = e => {
+    e.preventDefault();
+    axiosWithAuth()
+      .post("/users/login", this.state.credentials, config)
+      .then(res => {
+        window.localStorage.setItem("token", res.data.token);
+        this.findCurrentUser(this.state.credentials.username);
+        window.localStorage.setItem("current_user", JSON.stringify(this.state.credentials))
+        this.props.setCurrentUser(this.state.credentials);
+        this.props.history.push("/profile")
+      })
+      .catch(err => {
+        localStorage.removeItem("token");
+        console.log("error in login POST request ", err);
+      });
+
+  };
+
+  render() {
+    //console.log('localStorage', window.localStorage)
+    return (
+      <div>
+        <form onSubmit={this.login}>
+          <input
+            type="text"
+            name="username"
+            value={this.state.credentials.username}
+            onChange={this.handleChange}
+          />
+          <input
+            type="text"
+            name="password"
+            value={this.state.credentials.password}
+            onChange={this.handleChange}
+          />
+          <button>Log In</button>
+        </form>
+        <button>Log Out</button>
+      </div>
+    )
+  }
+}
+const mapStateToProps = state => {
+  return {
+    allUsers: state.allUsers,
+    userData: state.userData,
+    error: state.error,
+    isPostingData: state.isPostingData
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  { loginUser, getAllUsers, setCurrentUser }
+)(Login);
+
+
+////OLD CODE///// 
 /* import { useFormik, withFormik, Form, Field } from "formik";
 import * as yup from "yup"; */
-import { axiosWithAuth } from '../utilities/axiosWithAuth';
 
 /* Commented this out because I am still figuring out how to incorporate it into the
-class component I wrote below. Didn't want to delete the code that Pedro wrote with 
-Formik / Yup since that is part of his build week requirements -- Christine 
+class component I wrote below. Didn't want to delete the code that Pedro wrote with
+Formik / Yup since that is part of his build week requirements -- Christine
 
   const Login = ({ touched, errors, values, status }) => {
   console.log(status); //DATA FROM FORM, A USESTATE SHOULD BE CREATED TO SET FORM VALUES
@@ -61,69 +167,3 @@ export default withFormik({
 })(Login); */
 
 ////////////
-
-
-const config = {
-  headers: {
-    'Content-Type': 'application/json'
-  }
-}
-
-class Login extends React.Component {
-  state = {
-    credentials: {
-      username: "",
-      password: ""
-    }
-  };
-
-  handleChange = e => {
-    this.setState({
-      credentials: {
-        ...this.state.credentials,
-        [e.target.name]: e.target.value
-      }
-    });
-  }
-
-  login = e => {
-    e.preventDefault();
-    //console.log('credentials', this.state.credentials);
-    //console.log('headers', config)
-    axiosWithAuth()
-      .post("/users/login", this.state.credentials, config)
-      .then(res => {
-        console.log('in the post request')
-        localStorage.setItem("token", res.data.payload);
-        this.props.history.push("/");
-      })
-      .catch(err => {
-        localStorage.removeItem("token");
-        console.log("invalid login: ", err);
-      });
-  };
-
-  render() {
-    return (
-      <div>
-        <form onSubmit={this.login}>
-          <input
-            type="text"
-            name="username"
-            value={this.state.credentials.username}
-            onChange={this.handleChange}
-          />
-          <input
-            type="text"
-            name="password"
-            value={this.state.credentials.password}
-            onChange={this.handleChange}
-          />
-          <button>Log In</button>
-        </form>
-        <button onClick={localStorage.clear()}>Log Out</button>
-      </div>
-    )
-  }
-}
-export default Login;

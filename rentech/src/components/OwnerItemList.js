@@ -1,23 +1,29 @@
 import React from 'react';
-import { axiosWithAuth } from '../utilities/axiosWithAuth';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { getAllUsers, setCurrentUser } from '../actions';
+
+let currentUser = JSON.parse(window.localStorage.getItem("current_user"))
+console.log('currentUser', currentUser)
 
 class OwnerItemList extends React.Component {
     state = {
-        items: []
+        items: [],
     };
 
     componentDidMount() {
-        this.getData();
+        this.getCurrentUserItems();
+        this.props.setCurrentUser(currentUser);
     }
 
-    getData = () => {
-        axiosWithAuth()
-            .get("/users/:id/items")
-            //HELP: How do I get the right user id in here?
+    getCurrentUserItems = () => {
+        axios
+            .get(`https://use-my-tech-stuff-4.herokuapp.com/api/users/${this.props.userData.id}/items`)
             .then(res => {
-                console.log('getData function in OwnerProfile component results', res)
+                console.log('id', this.props.userData.id)
+                console.log('getUserItems function in OwnerProfile component results', res)
                 this.setState({
-                    items: res.data
+                    items: res.data.items
                 })
             })
             .catch(err => {
@@ -27,12 +33,13 @@ class OwnerItemList extends React.Component {
     }
 
     render() {
+        console.log('allUsers in OwnerItemList', this.props.allUsers);
         let itemsList = this.state.items;
         return (
             itemsList.map(n => {
                 return (
-                    <div>
-                        <div key={n.id}>
+                    <div key={n.id}>
+                        <div >
                             <p>Name: {n.name}</p>
                             <p>Description: {n.description}</p>
                             <p>Price: {n.price} per {n.price_type}</p>
@@ -45,4 +52,16 @@ class OwnerItemList extends React.Component {
     }
 }
 
-export default OwnerItemList;
+const mapStateToProps = state => {
+    return {
+        allUsers: state.allUsers,
+        error: state.error,
+        isFetchingData: state.isFetchingData,
+        userData: state.userData
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    { getAllUsers, setCurrentUser }
+)(OwnerItemList);
