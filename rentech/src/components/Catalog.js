@@ -6,7 +6,7 @@ import ProductPage from "./ProductPage"
 
 
 
-const Catalog = () => {
+const Catalog = props => {
 
   const [items, setItems] = useState([])
   const [query, setQuery] = useState('')
@@ -15,7 +15,6 @@ const Catalog = () => {
 
     setQuery(value)
     console.log(query)
-
 
   }
 
@@ -26,10 +25,9 @@ const Catalog = () => {
       .then(response => {
         const products = response.data.items.filter(element => element.name.toLowerCase().includes(query.search.toLowerCase()))
 
-
         setItems(products);
         console.log(items)
-
+        props.handleData(products)
 
       })
       .catch(error => console.log(error));
@@ -46,7 +44,6 @@ const Catalog = () => {
           <Link className='link' to={`/catalog/${item.id}`}>
             <div className='items-list'>
               <h3>{item.name}</h3>
-              <p>{item.description}</p>
               <p>${item.price}/{item.price_type}</p>
             </div></Link>
         ))}

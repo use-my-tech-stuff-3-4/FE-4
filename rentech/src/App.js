@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Link, Switch, NavLink } from 'react-router-dom';
 import "./App.css";
 import Login from "./components/Login";
 import Home from "./components/Home";
@@ -11,29 +11,41 @@ import Catalog from "./components/Catalog";
 import ProductPage from "./components/ProductPage";
 
 function App() {
+
+
+///State variable to manage data of items in Catalog component using a callback function
+const [ items, setItems] = useState("")
+
+const handleData = value => {
+
+  setItems(value)
+}
+////////////////////////
+
+
   return (
     <div>
 
       <Router>
       
-        <ul>
+        <ul className="nav-bar">
           <li>
-            <Link to="/">Home</Link>
+            <NavLink className="nav-link" to="/">Home</NavLink>
           </li>
           <li>
-            <Link to="/login">Login / Logout</Link>
+            <NavLink className="nav-link" activeStyle={{color: 'navy'}} to="/login">Login / Logout</NavLink>
           </li>
           <li>
-            <Link to="/register">Register</Link>
+            <NavLink className="nav-link" activeStyle={{color: 'navy'}} to="/register">Register</NavLink>
           </li>
           <li>
-            <Link to="/profile">Your Profile</Link>
+            <NavLink className="nav-link" activeStyle={{color: 'navy'}} to="/profile">Your Profile</NavLink>
           </li>
           <li>
-            <Link to="/add-item">Add Item For Rent</Link>
+            <NavLink className="nav-link" activeStyle={{color: 'navy'}} to="/add-item">Add Item For Rent</NavLink>
           </li>
           <li>
-            <Link to="/catalog">Catalog</Link>
+            <NavLink className="nav-link" activeStyle={{color: 'navy'}} to="/catalog">Catalog</NavLink>
           </li>
         </ul>
         <Switch>
@@ -41,8 +53,8 @@ function App() {
           <ProtectedRoute exact path="/add-item" component={AddItemForRent} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <Route path="/catalog/:id" component={ProductPage}/>
-          <Route path="/catalog" component={Catalog}/>
+          <Route path="/catalog/:id" render={routeProps => {return(<ProductPage match={routeProps.match} items={items} />)}}/>
+          <Route path="/catalog" render={routeProps => {return(<Catalog handleData={handleData} />)}}/>
           <Route component={Home} />
         </Switch>
       </Router>

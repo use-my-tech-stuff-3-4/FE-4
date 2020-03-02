@@ -1,20 +1,33 @@
 import React from "react";
 import axios from 'axios';
 
+
 const config = {
   headers: {
     'Content-Type': 'application/json'
   }
 }
 
+
+
+
 class Register extends React.Component {
+  
   state = {
     userInfo: {
       username: "",
       password: "",
       type: ""
+    },
+    errors: {
+      username: "",
+      password: "",
+      type: ""
     }
   };
+  
+ 
+
 
   handleChange = e => {
     this.setState({
@@ -49,6 +62,7 @@ class Register extends React.Component {
             value={this.state.userInfo.username}
             onChange={this.handleChange}
           />
+      
           <input
             type="text"
             name="password"

@@ -3,10 +3,14 @@
   text-align: center;
 }
 
+.nav-bar {
+
+  display: flex;
+ flex-direction: column;
+}
+
 .nav-link {
   text-decoration: none;
-  margin-left: 2%;
-  margin-right: 2%;
   color: royalblue;
 }
 
@@ -66,4 +70,10 @@
   color: cornflowerblue;
   margin: 2%;
   
+}
+
+.image {
+
+  width: 400px;
+  height: 300px;
 }
