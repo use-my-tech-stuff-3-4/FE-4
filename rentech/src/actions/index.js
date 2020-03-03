@@ -5,6 +5,7 @@ export const SET_ERROR = "SET_ERROR";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const LOGIN_USER = "LOGIN_USER";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const ADD_NEW_ITEM = "ADD_NEW_ITEM";
 
 const config = {
     headers: {
@@ -31,4 +32,3 @@ export const loginUser = () => dispatch => {
 export const setCurrentUser = (userData) => dispatch => {
     dispatch({ type: SET_CURRENT_USER, payload: userData });
 }
-

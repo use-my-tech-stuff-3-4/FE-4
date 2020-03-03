@@ -1,4 +1,6 @@
-import { POST_DATA, SET_ERROR, GET_ALL_USERS, SET_CURRENT_USER, LOGIN_USER } from '../actions';
+import {
+    POST_DATA, SET_ERROR, GET_ALL_USERS, SET_CURRENT_USER, LOGIN_USER
+} from '../actions';
 
 const initialState = {
     userData: {

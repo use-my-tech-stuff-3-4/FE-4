@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import axios from "axios"
-import { Link, Route } from "react-router-dom"
-import ProductPage from "./ProductPage"
+import { Link } from "react-router-dom"
 
 
 
@@ -41,15 +40,16 @@ const Catalog = props => {
       <section className='items' >
 
         {items.map(item => (
-          <Link className='link' to={`/catalog/${item.id}`}>
-            <div className='items-list'>
+          <Link className='link' to={`/catalog/${item.id}`} key={item.id}>
+            <div className='items-list' >
               <h3>{item.name}</h3>
               <p>${item.price}/{item.price_type}</p>
-            </div></Link>
+            </div>
+          </Link>
         ))}
-      
+
       </section>
-     
+
     </div>
   )
 }

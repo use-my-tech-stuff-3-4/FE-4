@@ -9,9 +9,10 @@ const config = {
     }
 }
 
-class AddItemForRent extends React.Component {
+class EditItemForRent extends React.Component {
+
     state = {
-        newItem: {
+        updatedItem: {
             name: "",
             description: "",
             price: 0,
@@ -20,26 +21,15 @@ class AddItemForRent extends React.Component {
         }
     }
 
-    addItem = (e) => {
+    updateItem = (e) => {
         e.preventDefault();
         axios
-            .post('https://use-my-tech-stuff-4.herokuapp.com/api/items', this.state.newItem, config)
+            .put(`https://use-my-tech-stuff-4.herokuapp.com/api/items/${this.props.history.id}`, this.state.updatedItem, config)
             .then(res => {
-                console.log('add new item post result', res);
+                console.log('update item put request result', res);
+                this.props.history.push("/profile");
             })
             .catch(err => console.log('error in add new item post request', err))
-
-        this.setState(
-            {
-                newItem: {
-                    id: 0,
-                    name: "",
-                    description: "",
-                    price: 0,
-                    price_type: "",
-                    user_id: 0
-                }
-            })
     }
 
     handleChange = e => {
@@ -51,44 +41,40 @@ class AddItemForRent extends React.Component {
         });
     }
 
-    redirectToProfile = () => {
-        this.props.history.push("/profile")
-    }
-
     render() {
-        //console.log('userData in add item component', this.props.userData)
+        console.log('is this the id?', this.props.history.id)
         return (
-            <form onSubmit={this.addItem}>
+            <form onSubmit={this.updateItem}>
                 <input
                     type="text"
                     name="name"
                     placeholder="Name"
-                    value={this.state.newItem.name}
+                    value={this.state.updatedItem.name}
                     onChange={this.handleChange}
                 />
                 <input
                     type="text"
                     name="description"
                     placeholder="Description"
-                    value={this.state.newItem.description}
+                    value={this.state.updatedItem.description}
                     onChange={this.handleChange}
                 />
                 <input
                     type="number"
                     name="price"
                     placeholder="Price ($USD)"
-                    value={this.state.newItem.price}
+                    value={this.state.updatedItem.price}
                     onChange={this.handleChange}
                 />
                 <input
                     type="text"
                     name="price_type"
                     placeholder="'hour', 'day', or 'week''"
-                    value={this.state.newItem.price_type}
+                    value={this.state.updatedItem.price_type}
                     onChange={this.handleChange}
                 />
 
-                <button>Add Item For Rent</button>
+                <button>Update Item</button>
             </form>
         )
     };
@@ -104,4 +90,4 @@ const mapStateToProps = state => {
 export default withRouter(connect(
     mapStateToProps,
     {}
-)(AddItemForRent));
+)(EditItemForRent));
