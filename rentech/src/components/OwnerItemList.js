@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { getAllUsers, setCurrentUser } from '../actions';
+import { withRouter } from 'react-router-dom';
 
 let currentUser = JSON.parse(window.localStorage.getItem("current_user"))
 console.log('currentUser', currentUser)
@@ -20,8 +21,8 @@ class OwnerItemList extends React.Component {
         axios
             .get(`https://use-my-tech-stuff-4.herokuapp.com/api/users/${this.props.userData.id}/items`)
             .then(res => {
-                console.log('id', this.props.userData.id)
-                console.log('getUserItems function in OwnerProfile component results', res)
+                //console.log('id', this.props.userData.id)
+                //console.log('getUserItems function in OwnerProfile component results', res)
                 this.setState({
                     items: res.data.items
                 })
@@ -31,9 +32,13 @@ class OwnerItemList extends React.Component {
             })
 
     }
+    goToItemPage = (item) => {
+        console.log('noelio', item);
+        this.props.history.push(`/edit-item/${item}`)
+    }
 
     render() {
-        console.log('allUsers in OwnerItemList', this.props.allUsers);
+        //console.log('allUsers in OwnerItemList', this.props.allUsers);
         let itemsList = this.state.items;
         return (
             itemsList.map(n => {
@@ -44,6 +49,8 @@ class OwnerItemList extends React.Component {
                             <p>Description: {n.description}</p>
                             <p>Price: {n.price} per {n.price_type}</p>
                         </div>
+                        <button onClick={() => { this.goToItemPage(n.id) }}>Edit Item</button>
+                        <button>Delete Item</button>
                     </div>
                 )
 
@@ -61,7 +68,7 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     { getAllUsers, setCurrentUser }
-)(OwnerItemList);
+)(OwnerItemList));
