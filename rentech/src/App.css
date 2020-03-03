@@ -20,6 +20,10 @@
 align-items: center;
 }
 
+.field {
+
+  margin-bottom: 1%;
+}
 
 
 .error {

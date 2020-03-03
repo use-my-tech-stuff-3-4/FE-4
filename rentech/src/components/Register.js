@@ -17,10 +17,13 @@ class Register extends React.Component {
   state = {
     userInfo: {
       username: "",
-      usernameError: "",
       password: "",
+      type: ""
+    },
+
+    userErrors: {
+      usernameError: "",
       passwordError: "",
-      type: "",
       typeError: ""
     }
   };
@@ -56,8 +59,8 @@ class Register extends React.Component {
     if (isError) {
 
       this.setState({
-        userInfo: {
-          ...this.state.userInfo,
+        userErrors: {
+          ...this.state.userErrors,
           ...errors
         }
       })
@@ -81,17 +84,6 @@ class Register extends React.Component {
         .then(res => {
           console.log('in the registration form post request')
           this.props.history.push("/login");
-
-          this.setState({
-            userInfo: {
-              username: "",
-              usernameError: "",
-              password: "",
-              passwordError: "",
-              type: "",
-              typeError: ""
-            }
-          });
          
         })
         .catch(err => {
@@ -113,7 +105,7 @@ class Register extends React.Component {
             hintText="username"
             value={this.state.userInfo.username}
             onChange={this.handleChange}
-            errorText={this.state.userInfo.usernameError}
+            errorText={this.state.userErrors.usernameError}
             floatingLabelFixed
             className="field"
           />
@@ -126,7 +118,7 @@ class Register extends React.Component {
             hintText="password"
             value={this.state.userInfo.password}
             onChange={this.handleChange}
-            errorText={this.state.userInfo.passwordError}
+            errorText={this.state.userErrors.passwordError}
             floatingLabelFixed
             className="field"
           />
@@ -137,7 +129,7 @@ class Register extends React.Component {
             hintText="'owner' or 'renter'?"
             value={this.state.userInfo.type}
             onChange={this.handleChange}
-            errorText={this.state.userInfo.typeError}
+            errorText={this.state.userErrors.typeError}
             loatingLabelFixed
             className="field"
           />
