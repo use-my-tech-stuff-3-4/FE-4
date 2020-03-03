@@ -15,24 +15,20 @@
 }
 
 .form {
-  margin-top: 15%;
   display: flex;
   flex-direction: column;
+align-items: center;
 }
 
-.field {
-  box-sizing: border-box;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 1% 1% 0% 1%;
-}
+
 
 .error {
   color: red;
 }
 
 .button {
-  background: green;
   margin-top: 2%;
+  width: 100px;
 }
 
 

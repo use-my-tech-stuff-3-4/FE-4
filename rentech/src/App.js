@@ -10,6 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Catalog from "./components/Catalog";
 import ProductPage from "./components/ProductPage";
 import EditItemForRent from "./components/EditItemForRent";
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
 
 
   return (
+    <MuiThemeProvider>
     <div>
 
       <Router>
@@ -61,6 +63,7 @@ function App() {
         </Switch>
       </Router>
     </div>
+    </MuiThemeProvider>
   );
 }
 

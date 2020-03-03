@@ -1,5 +1,7 @@
 import React from "react";
 import axios from 'axios';
+import TextField from "material-ui/TextField";
+
 
 
 const config = {
@@ -10,23 +12,20 @@ const config = {
 
 
 
-
 class Register extends React.Component {
-  
+
   state = {
     userInfo: {
       username: "",
+      usernameError: "",
       password: "",
-      type: ""
-    },
-    errors: {
-      username: "",
-      password: "",
-      type: ""
+      passwordError: "",
+      type: "",
+      typeError: ""
     }
   };
-  
- 
+
+
 
 
   handleChange = e => {
@@ -38,46 +37,111 @@ class Register extends React.Component {
     });
   }
 
+  validate = () => {
+
+    let isError = false;
+    const errors = {
+
+      usernameError: "",
+      passwordError: "",
+      typeError: ""
+    };
+
+    if (this.state.userInfo.username.length < 4) {
+      isError = true;
+      errors.usernameError = "Username needs to be at least 3 characters long"
+      console.log(errors)
+    }
+
+    if (isError) {
+
+      this.setState({
+        userInfo: {
+          ...this.state.userInfo,
+          ...errors
+        }
+      })
+    }
+
+
+    return isError;
+
+
+
+  }
+
   registerUser = e => {
     e.preventDefault();
-    axios
-      .post("https://use-my-tech-stuff-4.herokuapp.com/api/users/register", this.state.userInfo, config)
-      .then(res => {
-        console.log('in the registration form post request')
-        this.props.history.push("/login");
-      })
-      .catch(err => {
-        console.log("unable to register user due to error:", err);
-      });
+
+    const errorCheck = this.validate();
+
+    if (!errorCheck) {
+      axios
+        .post("https://use-my-tech-stuff-4.herokuapp.com/api/users/register", this.state.userInfo, config)
+        .then(res => {
+          console.log('in the registration form post request')
+          this.props.history.push("/login");
+
+          this.setState({
+            userInfo: {
+              username: "",
+              usernameError: "",
+              password: "",
+              passwordError: "",
+              type: "",
+              typeError: ""
+            }
+          });
+         
+        })
+        .catch(err => {
+          console.log("unable to register user due to error:", err);
+        });
+    }
+    
+    
   };
 
   render() {
     return (
       <div>
-        <form onSubmit={this.registerUser}>
-          <input
+        <form onSubmit={this.registerUser} className="form">
+          <TextField
             type="text"
             name="username"
-            placeholder="username"
+            floatingLabelText="username"
+            hintText="username"
             value={this.state.userInfo.username}
             onChange={this.handleChange}
+            errorText={this.state.userInfo.usernameError}
+            floatingLabelFixed
+            className="field"
           />
-      
-          <input
-            type="text"
+
+
+          <TextField
+            type="password"
             name="password"
-            placeholder="password"
+            floatingLabelText="password"
+            hintText="password"
             value={this.state.userInfo.password}
             onChange={this.handleChange}
+            errorText={this.state.userInfo.passwordError}
+            floatingLabelFixed
+            className="field"
           />
-          <input
+          <TextField
             type="text"
             name="type"
-            placeholder="'owner' or 'renter'?"
+            floatingLabelText="'owner' or 'renter'?"
+            hintText="'owner' or 'renter'?"
             value={this.state.userInfo.type}
             onChange={this.handleChange}
+            errorText={this.state.userInfo.typeError}
+            loatingLabelFixed
+            className="field"
           />
-          <button>Register</button>
+          <button className="button">Register</button>
         </form>
       </div>
     )

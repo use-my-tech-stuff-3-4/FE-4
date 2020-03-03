@@ -20,7 +20,7 @@ const ProductPage = props => {
 
             })
             .catch(error => console.log(error));
-    }, [item.user_id]);
+    }, []);
 
 
 
