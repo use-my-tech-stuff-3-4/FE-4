@@ -1,14 +1,23 @@
 import React from 'react';
 import OwnerItemList from "./OwnerItemList";
 import { axiosWithAuth } from '../utilities/axiosWithAuth';
+import { connect } from 'react-redux';
 
-function OwnerProfile() {
+function OwnerProfile(props) {
     axiosWithAuth();
     return (
         <div>
-            <h1>Username's Profile</h1>
+            <h1>{props.userData.username}'s Profile</h1>
             <OwnerItemList />
         </div>
     )
 }
-export default OwnerProfile;
+const mapStateToProps = state => {
+    return {
+        userData: state.userData
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(OwnerProfile);
