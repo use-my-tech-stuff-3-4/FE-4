@@ -3,12 +3,6 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-const config = {
-    headers: {
-        'Content-Type': 'application/json'
-    }
-}
-
 class AddItemForRent extends React.Component {
     state = {
         newItem: {
@@ -23,7 +17,7 @@ class AddItemForRent extends React.Component {
     addItem = (e) => {
         e.preventDefault();
         axios
-            .post('https://use-my-tech-stuff-4.herokuapp.com/api/items', this.state.newItem, config)
+            .post('https://use-my-tech-stuff-4.herokuapp.com/api/items', this.state.newItem)
             .then(res => {
                 console.log('add new item post result', res);
             })
@@ -56,7 +50,6 @@ class AddItemForRent extends React.Component {
     }
 
     render() {
-        //console.log('userData in add item component', this.props.userData)
         return (
             <form onSubmit={this.addItem}>
                 <input
