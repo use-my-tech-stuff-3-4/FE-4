@@ -3,13 +3,8 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-const config = {
-    headers: {
-        'Content-Type': 'application/json'
-    }
-}
-
 class EditItemForRent extends React.Component {
+    paramItemId = this.props.match.params.id;
 
     state = {
         updatedItem: {
@@ -18,13 +13,28 @@ class EditItemForRent extends React.Component {
             price: 0,
             price_type: "",
             user_id: this.props.userData.id
-        }
+        },
+        currentItem: {}
     }
+
+    componentDidMount() { this.findCurrentItem() };
+
+    findCurrentItem = () => {
+        axios
+            .get(`https://use-my-tech-stuff-4.herokuapp.com/api/items/${this.paramItemId}`)
+            .then(res => {
+                console.log('res in getting current item by id', res)
+                this.setState({ currentItem: res.data.item[0] });
+            })
+            .catch(err => console.log("error in finding the item you clicked on", err))
+    }
+
 
     updateItem = (e) => {
         e.preventDefault();
+        console.log('state going into PUT request', this.state.updatedItem);
         axios
-            .put(`https://use-my-tech-stuff-4.herokuapp.com/api/items/${this.props.history.id}`, this.state.updatedItem, config)
+            .put(`https://use-my-tech-stuff-4.herokuapp.com/api/items/${this.paramItemId}`, this.state.updatedItem)
             .then(res => {
                 console.log('update item put request result', res);
                 this.props.history.push("/profile");
@@ -34,42 +44,41 @@ class EditItemForRent extends React.Component {
 
     handleChange = e => {
         this.setState({
-            newItem: {
-                ...this.state.newItem,
+            updatedItem: {
+                ...this.state.updatedItem,
                 [e.target.name]: e.target.value
             }
         });
     }
 
     render() {
-        console.log('is this the id?', this.props.history.id)
         return (
             <form onSubmit={this.updateItem}>
                 <input
                     type="text"
                     name="name"
-                    placeholder="Name"
+                    placeholder={this.state.currentItem.name}
                     value={this.state.updatedItem.name}
                     onChange={this.handleChange}
                 />
                 <input
                     type="text"
                     name="description"
-                    placeholder="Description"
+                    placeholder={this.state.currentItem.description}
                     value={this.state.updatedItem.description}
                     onChange={this.handleChange}
                 />
                 <input
                     type="number"
                     name="price"
-                    placeholder="Price ($USD)"
+                    placeholder={this.state.currentItem.price}
                     value={this.state.updatedItem.price}
                     onChange={this.handleChange}
                 />
                 <input
                     type="text"
                     name="price_type"
-                    placeholder="'hour', 'day', or 'week''"
+                    placeholder={this.state.currentItem.price_type}
                     value={this.state.updatedItem.price_type}
                     onChange={this.handleChange}
                 />

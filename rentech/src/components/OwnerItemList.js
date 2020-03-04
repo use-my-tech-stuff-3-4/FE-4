@@ -33,8 +33,19 @@ class OwnerItemList extends React.Component {
 
     }
     goToItemPage = (item) => {
-        console.log('noelio', item);
         this.props.history.push(`/edit-item/${item}`)
+    }
+
+    deleteItem = (item) => {
+        axios
+            .delete(`https://use-my-tech-stuff-4.herokuapp.com/api/items/${item}`)
+            .then(res => {
+                console.log('res in the delete item request', res);
+                this.props.history.push("/profile")
+            })
+            .catch(err => {
+                console.log('error in deleting the item', err);
+            })
     }
 
     render() {
@@ -50,7 +61,7 @@ class OwnerItemList extends React.Component {
                             <p>Price: {n.price} per {n.price_type}</p>
                         </div>
                         <button onClick={() => { this.goToItemPage(n.id) }}>Edit Item</button>
-                        <button>Delete Item</button>
+                        <button onClick={() => { this.deleteItem(n.id) }}>Delete Item</button>
                     </div>
                 )
 
