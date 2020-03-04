@@ -29,8 +29,6 @@ class Register extends React.Component {
   };
 
 
-
-
   handleChange = e => {
     this.setState({
       userInfo: {
@@ -53,6 +51,18 @@ class Register extends React.Component {
     if (this.state.userInfo.username.length < 4) {
       isError = true;
       errors.usernameError = "Username needs to be at least 3 characters long"
+      console.log(errors)
+    }
+
+    if (!this.state.userInfo.password) {
+      isError = true;
+      errors.passwordError = "password required"
+      console.log(errors)
+    }
+
+    if (!this.state.userInfo.type) {
+      isError = true;
+      errors.typeError = "are you owner or renter? choose an option"
       console.log(errors)
     }
 
