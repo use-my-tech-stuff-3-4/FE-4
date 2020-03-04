@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
+import { Icon } from 'semantic-ui-react'
 
 
 const SearchBar = ({ values, handleQuery }) => {
@@ -10,10 +11,11 @@ const SearchBar = ({ values, handleQuery }) => {
 
 
   return (
-    <section >
+    <section className="search-bar" >
+      <h2>Catalog Page</h2>
       <Form>
         <label>
-          <Field name='search' type='text' placeholder='search' />
+          <Field  name='search' type='text' placeholder='search an item' /><Icon name="search"/>
         </label>
       </Form>
 

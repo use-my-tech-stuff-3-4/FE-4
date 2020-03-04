@@ -27,42 +27,31 @@ function App() {
 
   return (
     <MuiThemeProvider>
-    <div>
+      <div>
 
-      <Router>
 
-        <ul className="nav-bar">
-          <li>
+        <Router>
+          <h1>Rentech</h1>
+          <nav className="nav-bar">
             <NavLink className="nav-link" to="/">Home</NavLink>
-          </li>
-          <li>
-            <NavLink className="nav-link" activeStyle={{ color: 'navy' }} to="/login">Login / Logout</NavLink>
-          </li>
-          <li>
-            <NavLink className="nav-link" activeStyle={{ color: 'navy' }} to="/register">Register</NavLink>
-          </li>
-          <li>
-            <NavLink className="nav-link" activeStyle={{ color: 'navy' }} to="/profile">Your Profile</NavLink>
-          </li>
-          <li>
-            <NavLink className="nav-link" activeStyle={{ color: 'navy' }} to="/add-item">Add Item For Rent</NavLink>
-          </li>
-          <li>
             <NavLink className="nav-link" activeStyle={{ color: 'navy' }} to="/catalog">Catalog</NavLink>
-          </li>
-        </ul>
-        <Switch>
-          <ProtectedRoute exact path="/profile" component={OwnerProfile} />
-          <ProtectedRoute exact path="/add-item" component={AddItemForRent} />
-          <Route path="/edit-item/:id" component={EditItemForRent} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/catalog/:id" render={routeProps => { return (<ProductPage match={routeProps.match} items={items} />) }} />
-          <Route path="/catalog" render={routeProps => { return (<Catalog handleData={handleData} />) }} />
-          <Route component={Home} />
-        </Switch>
-      </Router>
-    </div>
+            <NavLink className="nav-link" activeStyle={{ color: 'navy' }} to="/profile">Your Profile</NavLink>
+            <NavLink className="nav-link" activeStyle={{ color: 'navy' }} to="/add-item">Add Item For Rent</NavLink>
+            <NavLink className="nav-link" activeStyle={{ color: 'navy' }} to="/login">Login / Logout</NavLink>
+            <NavLink className="nav-link" activeStyle={{ color: 'navy' }} to="/register">Register</NavLink>
+          </nav>
+          <Switch>
+            <ProtectedRoute exact path="/profile" component={OwnerProfile} />
+            <ProtectedRoute exact path="/add-item" component={AddItemForRent} />
+            <Route path="/edit-item/:id" component={EditItemForRent} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/catalog/:id" render={routeProps => { return (<ProductPage match={routeProps.match} items={items} />) }} />
+            <Route path="/catalog" render={routeProps => { return (<Catalog handleData={handleData} />) }} />
+            <Route component={Home} />
+          </Switch>
+        </Router>
+      </div>
     </MuiThemeProvider>
   );
 }

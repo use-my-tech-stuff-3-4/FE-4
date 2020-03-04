@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Card, Icon, Image } from "semantic-ui-react";
 
 const Catalog = props => {
@@ -29,8 +29,7 @@ const Catalog = props => {
   }, [query]);
 
   return (
-    <div>
-      <h2>Catalog Page</h2>
+    <div className="catalog">
       <SearchBar handleQuery={handleQuery} />
       <section className="items">
         {items.map(item => (

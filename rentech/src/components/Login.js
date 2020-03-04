@@ -2,6 +2,8 @@ import React from "react";
 import { axiosWithAuth } from '../utilities/axiosWithAuth';
 import { connect } from 'react-redux';
 import { loginUser, getAllUsers, setCurrentUser } from '../actions';
+import TextField from "material-ui/TextField";
+
 
 const config = {
   headers: {
@@ -70,22 +72,25 @@ class Login extends React.Component {
     //console.log('localStorage', window.localStorage)
     return (
       <div>
-        <form onSubmit={this.login}>
+        <form onSubmit={this.login} className="form">
+          <h2>LOGIN</h2>
+          <TextField hintText="username">
           <input
             type="text"
             name="username"
             value={this.state.credentials.username}
             onChange={this.handleChange}
-          />
+          /></TextField>
+          <TextField hintText="password" >
           <input
-            type="text"
+            type="password"
             name="password"
             value={this.state.credentials.password}
             onChange={this.handleChange}
-          />
-          <button>Log In</button>
+          /></TextField>
+          <button class="ui green button">Log In</button>
         </form>
-        <button>Log Out</button>
+        <button class="ui red button" id="log-out">Log Out</button>
       </div>
     )
   }

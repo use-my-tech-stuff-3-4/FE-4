@@ -111,6 +111,7 @@ class Register extends React.Component {
     return (
       <div>
         <form onSubmit={this.registerUser} className="form">
+        <h2>REGISTER</h2>
           <TextField
             type="text"
             name="username"
@@ -146,7 +147,7 @@ class Register extends React.Component {
             loatingLabelFixed
             className="field"
           />
-          <button className="button">Register</button>
+          <button class="ui green button" >Register</button>
         </form>
       </div>
     )
