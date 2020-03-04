@@ -45,18 +45,6 @@ align-items: center;
 }
 
 
-.items-list {
-
-  border: 1px solid lightgray;
-  width: 300px;
-  height: 200px;
-  text-decoration: none;
-  color: black;
-  background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url('https://images.pexels.com/photos/243757/pexels-photo-243757.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
-  background-size: 300px 200px;
-  transition: 0.5s;
-  
-}
 
 .items-list:hover {
 
@@ -68,7 +56,8 @@ align-items: center;
 
   text-decoration: none;
   color: cornflowerblue;
-  margin: 2%;
+  
+    margin: 3%;
   
 }
 
@@ -76,4 +65,15 @@ align-items: center;
 
   width: 400px;
   height: 300px;
+}
+
+.image-card {
+
+  width: 290px;
+  height: auto;
+}
+
+.card {
+
+    
 }

@@ -29,8 +29,6 @@ class Register extends React.Component {
   };
 
 
-
-
   handleChange = e => {
   
     this.setState({
@@ -58,6 +56,18 @@ class Register extends React.Component {
       console.log(errors)
     }
 
+    if (!this.state.userInfo.password) {
+      isError = true;
+      errors.passwordError = "password required"
+      console.log(errors)
+    }
+
+    if (!this.state.userInfo.type) {
+      isError = true;
+      errors.typeError = "are you owner or renter? choose an option"
+      console.log(errors)
+    }
+
     if (isError) {
 
       this.setState({
@@ -79,8 +89,9 @@ class Register extends React.Component {
     e.preventDefault();
 
     const errorCheck = this.validate();
-
+    console.log(errorCheck)
     if (!errorCheck) {
+      console.log(this.state.userInfo)
       axios
         .post("https://use-my-tech-stuff-4.herokuapp.com/api/users/register", this.state.userInfo, config)
         .then(res => {
