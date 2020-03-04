@@ -87,8 +87,9 @@ class Register extends React.Component {
     e.preventDefault();
 
     const errorCheck = this.validate();
-
+    console.log(errorCheck)
     if (!errorCheck) {
+      console.log(this.state.userInfo)
       axios
         .post("https://use-my-tech-stuff-4.herokuapp.com/api/users/register", this.state.userInfo, config)
         .then(res => {
