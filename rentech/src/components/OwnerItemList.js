@@ -3,6 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { getAllUsers, setCurrentUser } from '../actions';
 import { withRouter } from 'react-router-dom';
+import { Card, Icon } from "semantic-ui-react";
 
 let currentUser = JSON.parse(window.localStorage.getItem("current_user"))
 console.log('currentUser', currentUser)
@@ -54,14 +55,19 @@ class OwnerItemList extends React.Component {
         return (
             itemsList.map(n => {
                 return (
-                    <div key={n.id}>
-                        <div >
-                            <p>Name: {n.name}</p>
-                            <p>Description: {n.description}</p>
-                            <p>Price: {n.price} per {n.price_type}</p>
+                    <div key={n.id} className="items">
+                        <Card>
+                        <Card.Content>
+                        <div>
+                            <h2>{n.name}</h2>
+                            Description: 
+                            <p>{n.description}</p>
+                            <p>Price: ${n.price} per {n.price_type}</p>
                         </div>
-                        <button onClick={() => { this.goToItemPage(n.id) }}>Edit Item</button>
-                        <button onClick={() => { this.deleteItem(n.id) }}>Delete Item</button>
+                        </Card.Content>
+                        <a onClick={() => { this.goToItemPage(n.id) }} ><Icon name="edit" onClick={() => { this.goToItemPage(n.id) }}/>Edit</a>
+                        <a onClick={() => { this.deleteItem(n.id) }}><Icon name="delete" onClick={() => { this.deleteItem(n.id) }}/>Delete</a>
+                        </Card>
                     </div>
                 )
 

@@ -37,7 +37,8 @@ const ProductPage = props => {
                 <div className="item-title-wrapper">
                     <h2>{item.name}</h2>
                     <h4>${item.price}/{item.price_type}</h4>
-                    <p>{item.description}</p>
+                    <h3>Description:</h3>
+                    <p className="description">{item.description}</p>
 
                 </div>
             </div>

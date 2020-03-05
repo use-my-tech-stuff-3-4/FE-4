@@ -50,7 +50,7 @@ class AddItemForRent extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.addItem}>
+            <form onSubmit={this.addItem} className="form">
                 <input
                     type="text"
                     name="name"
@@ -58,7 +58,7 @@ class AddItemForRent extends React.Component {
                     value={this.state.newItem.name}
                     onChange={this.handleChange}
                 />
-                <input
+                <textarea
                     type="text"
                     name="description"
                     placeholder="Description"

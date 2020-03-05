@@ -53,7 +53,7 @@ class EditItemForRent extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.updateItem}>
+            <form onSubmit={this.updateItem} className="form">
                 <input
                     type="text"
                     name="name"
@@ -61,7 +61,7 @@ class EditItemForRent extends React.Component {
                     value={this.state.updatedItem.name}
                     onChange={this.handleChange}
                 />
-                <input
+                <textarea
                     type="text"
                     name="description"
                     placeholder={this.state.currentItem.description}

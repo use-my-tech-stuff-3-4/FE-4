@@ -102,3 +102,10 @@ h2 {
 
   text-align: center;
 }
+
+.description {
+
+  text-align: justify;
+  width: 50%;
+  margin-left: 25%;
+}

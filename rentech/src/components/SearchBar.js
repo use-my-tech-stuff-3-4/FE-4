@@ -15,7 +15,7 @@ const SearchBar = ({ values, handleQuery }) => {
       <h2>Catalog Page</h2>
       <Form>
         <label>
-          <Field  name='search' type='text' placeholder='search an item' /><Icon name="search"/>
+          <Field  name='search' type='search' placeholder='search an item' /><Icon name="search"/>
         </label>
       </Form>
 
