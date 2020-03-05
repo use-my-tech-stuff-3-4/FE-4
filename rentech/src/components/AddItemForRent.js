@@ -13,13 +13,16 @@ class AddItemForRent extends React.Component {
             user_id: this.props.userData.id
         }
     }
-
+    redirectToProfile = () => {
+        this.props.history.push("/profile")
+    }
     addItem = (e) => {
         e.preventDefault();
         axios
             .post('https://use-my-tech-stuff-4.herokuapp.com/api/items', this.state.newItem)
             .then(res => {
                 console.log('add new item post result', res);
+                this.redirectToProfile();
             })
             .catch(err => console.log('error in add new item post request', err))
 
@@ -43,10 +46,6 @@ class AddItemForRent extends React.Component {
                 [e.target.name]: e.target.value
             }
         });
-    }
-
-    redirectToProfile = () => {
-        this.props.history.push("/profile")
     }
 
     render() {
