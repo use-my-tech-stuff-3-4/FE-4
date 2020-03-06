@@ -33,7 +33,7 @@ function App() {
         <Router>
           <h1>Rentech</h1>
           <nav className="nav-bar">
-            <NavLink className="nav-link" to="/">Home</NavLink>
+            <a className="nav-link" href="https://elegant-kilby-53fb52.netlify.com/index.html">Home</NavLink>
             <NavLink className="nav-link" activeStyle={{ color: 'navy' }} to="/catalog">Catalog</NavLink>
             <NavLink className="nav-link" activeStyle={{ color: 'navy' }} to="/profile">Your Profile</NavLink>
             <NavLink className="nav-link" activeStyle={{ color: 'navy' }} to="/add-item">Add Item For Rent</NavLink>
