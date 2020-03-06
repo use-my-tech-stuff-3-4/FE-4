@@ -42,11 +42,15 @@ class OwnerItemList extends React.Component {
             .delete(`https://use-my-tech-stuff-4.herokuapp.com/api/items/${item}`)
             .then(res => {
                 console.log('res in the delete item request', res);
-                this.props.history.push("/profile")
+                this.reloadPage();
             })
             .catch(err => {
                 console.log('error in deleting the item', err);
             })
+    }
+    
+    reloadPage = () => {
+        this.props.history.push("/profile");
     }
 
     render() {
